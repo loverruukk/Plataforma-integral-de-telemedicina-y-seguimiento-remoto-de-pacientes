@@ -1,0 +1,9 @@
+module.exports = {
+  root: true,
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
+  extends: ['next', 'next/core-web-vitals', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  rules: {
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error'
+  }
+};

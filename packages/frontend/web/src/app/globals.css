@@ -1,0 +1,14 @@
+:root {
+  color-scheme: light dark;
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #0e1117;
+  color: #e4e7eb;
+}
+
+a {
+  color: #64b5f6;
+}
+
+body {
+  margin: 0;
+}

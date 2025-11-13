@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: telemed
+      POSTGRES_USER: telemed
+      POSTGRES_PASSWORD: telemed
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'telemed']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5432:5432'
+
+  backend:
+    build:
+      context: ../
+      dockerfile: infra/docker/Dockerfile.backend
+    env_file:
+      - ../packages/backend/.env.example
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - '3001:3000'
+
+  web:
+    build:
+      context: ../
+      dockerfile: infra/docker/Dockerfile.frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:3001
+    depends_on:
+      - backend
+    ports:
+      - '3000:3000'
+
+volumes:
+  postgres-data:
